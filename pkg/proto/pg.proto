@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package proto;
+
+service PGManager {
+    rpc UpdatePostgresqlConf(UpdatePostgresqlConfRequest) returns (PGResponse) {}
+    rpc UpdatePGHBAConf(UpdatePGHBAConfRequest) returns (PGResponse) {}
+    rpc CreateRecoveryConf(CreateRecoveryConfRequest) returns (PGResponse) {}
+    rpc DeleteRecoveryConf(DeleteRecoveryConfRequest) returns (PGResponse) {}
+}
+
+message PGResponse {
+    bool succeed = 1;
+}
+
+message UpdatePostgresqlConfRequest {
+    uint32 port = 1;
+    bool is_master = 2;
+}
+
+message UpdatePGHBAConfRequest {
+    string user = 1;
+    string another_ip = 2;
+}
+
+message CreateRecoveryConfRequest {
+    string another_ip = 1;
+    uint32 port = 2;
+}
+
+message DeleteRecoveryConfRequest {}
