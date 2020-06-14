@@ -19,7 +19,6 @@ message UpdatePostgresqlConfRequest {
     string password = 3;
     uint32 port = 4;
     bool is_master = 5;
-    bool is_slave = 6;
 }
 
 message UpdatePGHBAConfRequest {

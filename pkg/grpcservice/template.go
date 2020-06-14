@@ -55,6 +55,9 @@ fsync = off
 wal_sender_timeout = 60s
 synchronous_commit = off 
 
+# - Standby Server Config -
+# These settings are ignored on a master server.
+primary_conninfo = 'host={{.Host}} port={{.Port}} user={{.User}} password={{.Password}} application_name=slave'
 `
 
 	PG_EXTENSIONS_FOR_MASTER_CONF = `
@@ -62,11 +65,6 @@ synchronous_commit = off
 synchronous_standby_names = slave # standby servers that provide sync rep
                                   # comma-separated list of application_name
                                   # from standby(s); '*' = all
-
-`
-	PG_EXTENSIONS_FOR_SLAVE_CONF = `
-# added only the the node running postgres as 'slave'
-primary_conninfo = 'host={{.Host}} port={{.Port}} user={{.User}} password={{.Password}} application_name=slave'
 `
 
 	PG_STANDBY_SIGNAL = `#~lx-----------------------------------------------------------------------------

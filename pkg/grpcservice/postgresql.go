@@ -13,7 +13,7 @@ import (
 
 const PGConfFile = "/data/postgresql.conf"
 
-var PGConfRegexp = regexp.MustCompile(`^\s*#?\s*(listen_addresses|port|wal_level|archive_mode|archive_command|max_wal_senders|wal_keep_segments|hot_standby|synchronous_standby_names)\s*=\s*`)
+var PGConfRegexp = regexp.MustCompile(`^\s*#?\s*(listen_addresses|port|wal_level|archive_mode|archive_command|max_wal_senders|wal_keep_segments|hot_standby|primary_conninfo|synchronous_standby_names)\s*=\s*`)
 
 func updatePGConfFile(req *pb.UpdatePostgresqlConfRequest) error {
 	pgConfContent, err := getFileContent(PGConfFile, PGConfRegexp)
@@ -34,8 +34,6 @@ func updatePGConfFile(req *pb.UpdatePostgresqlConfRequest) error {
 	pgConfContent += pgConfContentSuffix
 	if req.GetIsMaster() {
 		pgConfContent += PG_EXTENSIONS_FOR_MASTER_CONF
-	} else if req.GetIsSlave() {
-		pgConfContent += PG_EXTENSIONS_FOR_SLAVE_CONF
 	}
 
 	if err := ioutil.WriteFile(PGConfFile, []byte(pgConfContent), 0600); err != nil {
