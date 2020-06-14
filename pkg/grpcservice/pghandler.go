@@ -11,17 +11,17 @@ func newPGHandler() *PGHandler {
 }
 
 func (h *PGHandler) UpdatePostgresqlConf(req *pb.UpdatePostgresqlConfRequest) error {
-	return updatePGConfFile(req.GetPort(), req.GetIsMaster())
+	return updatePGConfFile(req)
 }
 
 func (h *PGHandler) UpdatePGHBAConf(req *pb.UpdatePGHBAConfRequest) error {
-	return updateHBAConfFile(req.GetAnotherIp(), req.GetUser())
+	return updateHBAConfFile(req)
 }
 
-func (h *PGHandler) CreateRecoveryConf(req *pb.CreateRecoveryConfRequest) error {
-	return createRecoveryConfFile(req.GetAnotherIp(), req.GetPort())
+func (h *PGHandler) CreateStandbySignal(req *pb.CreateStandbySignalRequest) error {
+	return createStandbySignalFile()
 }
 
-func (h *PGHandler) DeleteRecoveryConf(req *pb.DeleteRecoveryConfRequest) error {
-	return deleteRecoveryConfFile()
+func (h *PGHandler) DeleteStandbySignal(req *pb.DeleteStandbySignalRequest) error {
+	return deleteStandbySignalFile()
 }

@@ -5,8 +5,8 @@ package proto;
 service PGManager {
     rpc UpdatePostgresqlConf(UpdatePostgresqlConfRequest) returns (PGResponse) {}
     rpc UpdatePGHBAConf(UpdatePGHBAConfRequest) returns (PGResponse) {}
-    rpc CreateRecoveryConf(CreateRecoveryConfRequest) returns (PGResponse) {}
-    rpc DeleteRecoveryConf(DeleteRecoveryConfRequest) returns (PGResponse) {}
+    rpc CreateStandbySignal(CreateStandbySignalRequest) returns (PGResponse) {}
+    rpc DeleteStandbySignal(DeleteStandbySignalRequest) returns (PGResponse) {}
 }
 
 message PGResponse {
@@ -14,8 +14,12 @@ message PGResponse {
 }
 
 message UpdatePostgresqlConfRequest {
-    uint32 port = 1;
-    bool is_master = 2;
+    string host = 1;
+    string user = 2;
+    string password = 3;
+    uint32 port = 4;
+    bool is_master = 5;
+    bool is_slave = 6;
 }
 
 message UpdatePGHBAConfRequest {
@@ -23,9 +27,6 @@ message UpdatePGHBAConfRequest {
     string another_ip = 2;
 }
 
-message CreateRecoveryConfRequest {
-    string another_ip = 1;
-    uint32 port = 2;
-}
+message CreateStandbySignalRequest{}
 
-message DeleteRecoveryConfRequest {}
+message DeleteStandbySignalRequest{}

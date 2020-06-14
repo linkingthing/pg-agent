@@ -32,16 +32,16 @@ func (s *PGService) UpdatePGHBAConf(ctx context.Context, req *pb.UpdatePGHBAConf
 	}
 }
 
-func (s *PGService) CreateRecoveryConf(ctx context.Context, req *pb.CreateRecoveryConfRequest) (*pb.PGResponse, error) {
-	if err := s.handler.CreateRecoveryConf(req); err != nil {
+func (s *PGService) CreateStandbySignal(ctx context.Context, req *pb.CreateStandbySignalRequest) (*pb.PGResponse, error) {
+	if err := s.handler.CreateStandbySignal(req); err != nil {
 		return &pb.PGResponse{Succeed: false}, err
 	} else {
 		return &pb.PGResponse{Succeed: true}, nil
 	}
 }
 
-func (s *PGService) DeleteRecoveryConf(ctx context.Context, req *pb.DeleteRecoveryConfRequest) (*pb.PGResponse, error) {
-	if err := s.handler.DeleteRecoveryConf(req); err != nil {
+func (s *PGService) DeleteStandbySignal(ctx context.Context, req *pb.DeleteStandbySignalRequest) (*pb.PGResponse, error) {
+	if err := s.handler.DeleteStandbySignal(req); err != nil {
 		return &pb.PGResponse{Succeed: false}, err
 	} else {
 		return &pb.PGResponse{Succeed: true}, nil
