@@ -22,10 +22,7 @@ func updatePGConfFile(req *pb.UpdatePostgresqlConfRequest) error {
 	}
 
 	pgConfContentSuffix, err := compileTemplate(PG_CONF, map[string]interface{}{
-		"Host":     req.GetHost(),
-		"User":     req.GetUser(),
-		"Password": req.GetPassword(),
-		"Port":     req.GetPort(),
+		"Port": req.GetPort(),
 	})
 	if err != nil {
 		return fmt.Errorf("generate pg config suffix from tempalte failed: %s", err.Error())
@@ -34,6 +31,17 @@ func updatePGConfFile(req *pb.UpdatePostgresqlConfRequest) error {
 	pgConfContent += pgConfContentSuffix
 	if req.GetIsMaster() {
 		pgConfContent += PG_EXTENSIONS_FOR_MASTER_CONF
+	} else if req.GetIsSlave() {
+		pgSlaveConfContentSuffix, err := compileTemplate(PG_EXTENSIONS_FOR_SLAVE_CONF, map[string]interface{}{
+			"Host":     req.GetHost(),
+			"User":     req.GetUser(),
+			"Password": req.GetPassword(),
+			"Port":     req.GetPort(),
+		})
+		if err != nil {
+			return fmt.Errorf("generate pg slave config suffix from tempalte failed: %s", err.Error())
+		}
+		pgConfContent += pgSlaveConfContentSuffix
 	}
 
 	if err := ioutil.WriteFile(PGConfFile, []byte(pgConfContent), 0600); err != nil {
