@@ -24,9 +24,9 @@ host    replication     {{.User}}        {{.IP}}/32            trust`
 # IMPORTANT: these settings will always be overriden when the server boots. They
 # are set dynamically and so should never change.
 
+listen_addresses = '*'
 port = {{.Port}}
 wal_level = replica
-archive_mode = on
 max_wal_senders = 10
 wal_keep_segments = 32
 hot_standby = on
