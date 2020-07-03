@@ -1,6 +1,6 @@
 GOSRC = $(shell find . -type f -name '*.go')
 
-IMAGE_VERSION: v1.0.0
+IMAGE_VERSION=v1.0.0
 
 build:
 	CGO_ENABLED=0 GOOS=linux go build cmd/pg-agent/pg-agent.go
