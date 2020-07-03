@@ -32,7 +32,7 @@ wal_keep_segments = 32
 hot_standby = on
 fsync = off
 wal_sender_timeout = 60s
-synchronous_commit = on
+synchronous_commit = off
 
 `
 
