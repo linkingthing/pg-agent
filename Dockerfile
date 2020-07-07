@@ -6,6 +6,7 @@ RUN mkdir -p /go/src/github.com/linkingthing/pg-agent
 COPY . /go/src/github.com/linkingthing/pg-agent
 
 WORKDIR /go/src/github.com/linkingthing/pg-agent
+RUN chmod u+rw-x,go-rwx etc/rsyncd.*
 RUN CGO_ENABLED=0 GOOS=linux go build cmd/pg-agent/pg-agent.go
 
 FROM instrumentisto/rsync-ssh:latest
