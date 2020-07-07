@@ -3,6 +3,8 @@ package grpcserver
 import (
 	"fmt"
 	"net"
+	"os"
+	"os/exec"
 
 	"google.golang.org/grpc"
 
@@ -18,6 +20,10 @@ type GRPCServer struct {
 }
 
 func New() (*GRPCServer, error) {
+	if err := runRsyncDaemon(); err != nil {
+		return nil, fmt.Errorf("run rsync daemon failed: %s", err.Error())
+	}
+
 	listener, err := net.Listen("tcp", ListenAddr)
 	if err != nil {
 		return nil, fmt.Errorf("create listener with addr 0.0.0.0:8888 failed: %s", err.Error())
@@ -38,4 +44,11 @@ func (s *GRPCServer) Run() error {
 
 func (s *GRPCServer) Stop() {
 	s.server.GracefulStop()
+}
+
+func runRsyncDaemon() error {
+	cmd := exec.Command("/bin/sh", "-c", "rsync --daemon")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	return cmd.Run()
 }

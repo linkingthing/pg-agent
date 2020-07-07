@@ -47,3 +47,11 @@ func (s *PGService) DeleteStandbySignal(ctx context.Context, req *pb.DeleteStand
 		return &pb.PGResponse{Succeed: true}, nil
 	}
 }
+
+func (s *PGService) RsyncPostgresqlData(ctx context.Context, req *pb.RsyncPostgresqlDataRequest) (*pb.PGResponse, error) {
+	if err := s.handler.RsyncPostgresqlData(req); err != nil {
+		return &pb.PGResponse{Succeed: false}, err
+	} else {
+		return &pb.PGResponse{Succeed: true}, nil
+	}
+}

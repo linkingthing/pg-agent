@@ -25,3 +25,7 @@ func (h *PGHandler) CreateStandbySignal(req *pb.CreateStandbySignalRequest) erro
 func (h *PGHandler) DeleteStandbySignal(req *pb.DeleteStandbySignalRequest) error {
 	return deleteStandbySignalFile()
 }
+
+func (h *PGHandler) RsyncPostgresqlData(req *pb.RsyncPostgresqlDataRequest) error {
+	return rsyncPostgresqlData(req)
+}

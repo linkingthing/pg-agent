@@ -7,6 +7,7 @@ service PGManager {
     rpc UpdatePGHBAConf(UpdatePGHBAConfRequest) returns (PGResponse) {}
     rpc CreateStandbySignal(CreateStandbySignalRequest) returns (PGResponse) {}
     rpc DeleteStandbySignal(DeleteStandbySignalRequest) returns (PGResponse) {}
+    rpc RsyncPostgresqlData(RsyncPostgresqlDataRequest) returns (PGResponse) {}
 }
 
 message PGResponse {
@@ -30,3 +31,7 @@ message UpdatePGHBAConfRequest {
 message CreateStandbySignalRequest{}
 
 message DeleteStandbySignalRequest{}
+
+message RsyncPostgresqlDataRequest{
+    string address = 1;
+}
