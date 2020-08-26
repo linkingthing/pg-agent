@@ -47,7 +47,7 @@ func (s *GRPCServer) Stop() {
 }
 
 func runRsyncDaemon() error {
-	if _, err := os.Stat("/var/run/rsyncd.pid"); os.IsExist(err) {
+	if _, err := os.Stat("/var/run/rsyncd.pid"); os.IsNotExist(err) == false {
 		util.ExecCommand("kill -9 $(cat /var/run/rsyncd.pid)")
 		util.ExecCommand("rm -rf /var/run/rsyncd.pid")
 	}
