@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"net"
 	"os"
-	"os/exec"
 
 	"google.golang.org/grpc"
 
 	"github.com/linkingthing/pg-agent/pkg/grpcservice"
 	"github.com/linkingthing/pg-agent/pkg/proto"
+	"github.com/linkingthing/pg-agent/pkg/util"
 )
 
 const ListenAddr = "0.0.0.0:8888"
@@ -47,8 +47,10 @@ func (s *GRPCServer) Stop() {
 }
 
 func runRsyncDaemon() error {
-	cmd := exec.Command("/bin/sh", "-c", "rsync --daemon")
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	return cmd.Run()
+	if _, err := os.Stat("/var/run/rsyncd.pid"); os.IsExist(err) {
+		util.ExecCommand("kill -9 $(cat /var/run/rsyncd.pid)")
+		util.ExecCommand("rm -rf /var/run/rsyncd.pid")
+	}
+
+	return util.ExecCommand("rsync --daemon")
 }
